@@ -94,7 +94,11 @@ fi
 
 # Exécuter les migrations
 echo -e "\n${BLUE}🔄 Exécution des migrations...${NC}"
-php artisan migrate --force
+php -d memory_limit=512M artisan migrate --force
+
+# Seed database with initial data
+echo -e "\n${BLUE}🌱 Seeding database with initial data...${NC}"
+php -d memory_limit=512M artisan db:seed --force
 
 # Créer un lien symbolique pour le storage
 echo -e "\n${BLUE}🔗 Création du lien symbolique storage...${NC}"
@@ -110,11 +114,11 @@ echo -e "🎉 Coolify est prêt à être lancé!"
 echo -e "=================================================="
 echo -e "\nPour démarrer les services, exécutez dans des terminaux séparés:"
 echo -e "\n  ${GREEN}Terminal 1 - Serveur Web:${NC}"
-echo -e "    php artisan serve --host=0.0.0.0 --port=8000"
+echo -e "    php -d memory_limit=512M artisan serve --host=0.0.0.0 --port=8000"
 echo -e "\n  ${GREEN}Terminal 2 - Queue Worker:${NC}"
-echo -e "    php artisan queue:work --tries=3"
+echo -e "    php -d memory_limit=512M artisan queue:work --tries=3"
 echo -e "\n  ${GREEN}Terminal 3 - Horizon (optionnel):${NC}"
-echo -e "    php artisan horizon"
+echo -e "    php -d memory_limit=512M artisan horizon"
 echo -e "\n  ${GREEN}Terminal 4 - Vite Dev Server (optionnel):${NC}"
 echo -e "    npm run dev"
 echo -e "\n${BLUE}Accédez à l'application:${NC} http://localhost:8000"

@@ -17,21 +17,21 @@ mkdir -p storage/logs/services
 
 # Démarrer le serveur web
 echo -e "${BLUE}🌐 Démarrage du serveur web...${NC}"
-php artisan serve --host=0.0.0.0 --port=8000 > storage/logs/services/web.log 2>&1 &
+php -d memory_limit=512M artisan serve --host=0.0.0.0 --port=8000 > storage/logs/services/web.log 2>&1 &
 WEB_PID=$!
 echo $WEB_PID > storage/logs/services/web.pid
 echo -e "${GREEN}✅ Serveur web démarré (PID: $WEB_PID)${NC}"
 
 # Démarrer le queue worker
 echo -e "${BLUE}⚙️  Démarrage du queue worker...${NC}"
-php artisan queue:work --tries=3 > storage/logs/services/queue.log 2>&1 &
+php -d memory_limit=512M artisan queue:work --tries=3 > storage/logs/services/queue.log 2>&1 &
 QUEUE_PID=$!
 echo $QUEUE_PID > storage/logs/services/queue.pid
 echo -e "${GREEN}✅ Queue worker démarré (PID: $QUEUE_PID)${NC}"
 
 # Démarrer Horizon (optionnel)
 echo -e "${BLUE}🔭 Démarrage de Horizon...${NC}"
-php artisan horizon > storage/logs/services/horizon.log 2>&1 &
+php -d memory_limit=512M artisan horizon > storage/logs/services/horizon.log 2>&1 &
 HORIZON_PID=$!
 echo $HORIZON_PID > storage/logs/services/horizon.pid
 echo -e "${GREEN}✅ Horizon démarré (PID: $HORIZON_PID)${NC}"
